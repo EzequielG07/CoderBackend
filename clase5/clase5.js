@@ -65,74 +65,77 @@ fs.unlink("archivo2.txt", (error) => {
   }
 });
 
-//* PROMESAS----------------------------------------
+//* PROMESAS------------------------------------------------------
 
-// fs.promises
-//   .writeFile("archivoPromesas.txt", "Primer linea Promesas")
-//   .then(() => {
-//     console.log("Archivo creado con exito");
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
+//* escribir archivos----------------------------------------------
+fs.promises
+  .writeFile("archivoPromesas.txt", "Primer linea Promesas")
+  .then(() => {
+    console.log("Archivo creado con exito");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-// fs.promises
-//   .readFile("archivoPromesas.txt", "utf-8")
-//   .then((info) => {
-//     console.log(info);
-//   })
-//   .catch((error) => {
-//     console.log("Prueba error", error);
-//   });
+//* leer un archivo------------------------------------------------
+fs.promises
+  .readFile("archivoPromesas.txt", "utf-8")
+  .then((info) => {
+    console.log(info);
+  })
+  .catch((error) => {
+    console.log("Prueba error", error);
+  });
 
-// fs.promises
-//   .unlink("archivoPromesas.txt")
-//   .then(() => console.log("Archivo promesa borrado con exito")) //se pueda hacer sin llave si es una linea
-//   .catch((error) => console.log(error));
+//* eliminar un archivo--------------------------------------------
+fs.promises
+  .unlink("archivoPromesas.txt")
+  .then(() => console.log("Archivo promesa borrado con exito")) //se pueda hacer sin llave si es una linea
+  .catch((error) => console.log(error));
 
-// const productos = [
-//   {
-//     nombre: "iPhone",
-//     precio: 500,
-//     stock: 40,
-//   },
-//   {
-//     nombre: "iPad",
-//     precio: 200,
-//     stock: 20,
-//   },
-//   {
-//     nombre: "TV",
-//     precio: 800,
-//     stock: 10,
-//   },
-//   {
-//     nombre: "Computadora",
-//     precio: 1200,
-//     stock: 40,
-//   },
-// ];
+//* EJEMPLO: crear y leer un archivo .JSON--------------------------------------------
 
-// // JSON.stringify() -> pasa de objeto a texto plano Json
-// // JSON.parse() -> pasa de texto plano Json a objeto
+const productos = [
+  {
+    nombre: "iPhone",
+    precio: 500,
+    stock: 40,
+  },
+  {
+    nombre: "iPad",
+    precio: 200,
+    stock: 20,
+  },
+  {
+    nombre: "TV",
+    precio: 800,
+    stock: 10,
+  },
+  {
+    nombre: "Computadora",
+    precio: 1200,
+    stock: 40,
+  },
+];
 
-// fs.promises
-//   .writeFile("archivoPromesas.json", JSON.stringify(productos))
-//   .then(() => {
-//     console.log("Productos guardados con exito");
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
+//?---> JSON.stringify() -> pasa de objeto a texto plano Json
+//?---> JSON.parse() -> pasa de texto plano Json a objeto
 
-// fs.promises
-//   .readFile("archivoPromesas.json", "utf-8")
-//   .then((info) => {
-//     console.log(info);
-//     console.log(JSON.parse(info));
-//   })
-//   .catch((error) => {
-//     console.log("Prueba error", error);
-//   });
+fs.promises
+  .writeFile("archivoPromesas.json", JSON.stringify(productos))
+  .then(() => {
+    console.log("Productos guardados con exito");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-// //HAY ACTIVIDAD(indexHandsOn en clase 5)
+fs.promises
+  .readFile("archivoPromesas.json", "utf-8")
+  .then((info) => {
+    console.log(info);
+    console.log(JSON.parse(info));
+  })
+  .catch((error) => {
+    console.log("Prueba error", error);
+  });
