@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validarUsuario } from "../middlewares/userValidations.middleware.js";
 
 const products = [];
 
@@ -13,7 +14,7 @@ router.get("/:idProd", (req, res) => {
   res.send(idProd);
 });
 
-router.post("/", (req, res) => {
+router.post("/", validarUsuario, (req, res) => {
   const obj = req.body;
   products.push(obj);
   res.json({ message: "Product added" });
