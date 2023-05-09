@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs, { existsSync } from "fs";
 
 export default class ProductManager {
   constructor(path) {
@@ -31,6 +31,41 @@ export default class ProductManager {
     productFile.push(newProduct);
     await fs.promises.writeFile(this.path, JSON.stringify(productFile));
     return newProduct;
+  }
+
+  async deleteProducts() {
+    if (existsSync(this.path)) {
+      await fs.promises.unlink(this.path);
+      return "Products deleted";
+    } else {
+      return "There is no products";
+    }
+  }
+
+  async deleteProductById(idProd) {
+    const productsFile = await this.getProducts();
+    const productIndex = productsFile.findIndex((p) => p.id === idProd);
+    if (productIndex === -1) {
+      return "Product does not exist";
+    } else {
+      productsFile.splice(productIndex, 1);
+      await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
+      return "Product deleted";
+    }
+  }
+
+  async updateProduct(idProd, obj) {
+    const productsFile = await this.getProducts();
+    const product = productsFile.find((p) => p.id === idProd);
+    if (!product) {
+      return "Product does not exist";
+    } else {
+      const updateProduct = { ...product, ...obj };
+      const productIndex = productsFile.findIndex((p) => p.id === idProd);
+      productsFile.splice(productIndex, 1, updateProduct);
+      await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
+      return "Product updated";
+    }
   }
 
   #createId(products) {

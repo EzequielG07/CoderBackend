@@ -16,7 +16,7 @@ app.get("/products", async (req, res) => {
 });
 
 app.get("/products/:idProd", async (req, res) => {
-  const { idProd } = req.params; //? {idProd} es apra descructuring
+  const { idProd } = req.params; //? {idProd} es para descructuring
   const product = await productManager.getProductById(+idProd);
   res.json({ product });
 });
@@ -26,6 +26,24 @@ app.post("/products", async (req, res) => {
   // console.log("informacion de producto:", obj);
   const newProduct = await productManager.createProduct(obj);
   res.json({ message: "Product created", product: newProduct });
+});
+
+app.delete("/products", async (req, res) => {
+  const message = await productManager.deleteProducts();
+  res.json({ message });
+});
+
+app.delete("/products/:idProd", async (req, res) => {
+  const { idProd } = req.params;
+  const message = await productManager.deleteProductById(+idProd);
+  res.json({ message });
+});
+
+app.put("/products/:idProd", async (req, res) => {
+  const { idProd } = req.params;
+  const obj = req.body;
+  const product = await productManager.updateProduct(+idProd, obj);
+  res.json({ product });
 });
 
 app.listen(8080, () => {
