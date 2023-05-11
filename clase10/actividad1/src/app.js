@@ -1,4 +1,4 @@
-//*Utilizar la misma estructura mostrada por el profesor, para poder levantar un servidor que utilice handlebars como motor de plantillas.
+//* Utilizar la misma estructura mostrada por el profesor, para poder levantar un servidor que utilice handlebars como motor de plantillas.
 import express from "express";
 import { __dirname } from "./utils.js";
 import handlebars from "express-handlebars";
