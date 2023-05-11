@@ -1,0 +1,11 @@
+{{!-- el #each es el forEach en handlebars --}}
+{{#if users.length}}
+
+{{#each users}}
+<p>Hola {{nombre}} {{apellido}}</p>
+<p>Tu correo es {{correo}} y tu telefono es {{telefono}} - tienes {{edad}} tantos años de edad</p>
+{{/each}}
+
+{{else}}
+<h2>No Hay USUARIOS Registrados</h2>
+{{/if}}
