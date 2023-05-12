@@ -1,9 +1,9 @@
 {
-  "name": "clase10",
+  "name": "actividad2",
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "clase10.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon src/app.js"
   },

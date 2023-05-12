@@ -1,0 +1,10 @@
+{{#if users.length}}
+
+{{#each users}}
+<p>Hola {{nombre}}</p>
+<p>Tu correo es {{correo}} y tu contraseña es {{contrasena}}</p>
+{{/each}}
+
+{{else}}
+<h2>No Hay USUARIOS Registrados</h2>
+{{/if}}

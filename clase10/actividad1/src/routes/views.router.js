@@ -55,5 +55,6 @@ router.get("/", (req, res) => {
 router.get("/listadoCompleto", (req, res) => {
   res.render("listadoCompleto", { users });
 });
+//http://localhost:8080/views/listadoCompleto
 
 export default router;
