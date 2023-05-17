@@ -34,7 +34,7 @@ export class ManagerCart {
     await fs.promises.writeFile(this.path, JSON.stringify(cartsFile));
     return newCart;
   }
-
+  //*agregar un producto al carrito (localhost:8080/carts/2/product/3)
   async addProductToCart(idCart, idProduct) {
     if (!idProduct || !idCart) return "Faltan datos";
     const cart = await this.getCart(idCart);
