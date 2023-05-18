@@ -1,2 +1,2 @@
-//-------------------------------------------CLASE 10 - Websockets------------------------------------------------------
-// ver a partir de minuto 35:26
+//-------------------------------------------CLASE 11 - Websockets------------------------------------------------------
+// primeros pason con websockets util para desafio en diapositiva
