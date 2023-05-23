@@ -1,3 +1,4 @@
+// crear const __dirname
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 

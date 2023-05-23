@@ -1,9 +1,9 @@
 {
-  "name": "clase16",
+  "name": "clase15",
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "clase16.js",
+  "main": "clase15.js",
   "scripts": {
     "start": "nodemon src/app.js"
   },

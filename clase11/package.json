@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "clase11.js",
+  "main": "clase12.js",
   "scripts": {
     "start": "nodemon src/app.js"
   },

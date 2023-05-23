@@ -1,108 +1,94 @@
-//-------------------------------------------CLASE 2 - Principios básicos de JavaScript------------------------------------------------------
-// //tipos de datos primitivos ---------------
-// let stringVal = "coderhouse";
-// let numberVal = 5;
-// let bool = true;
-// let nullVall = null;
-// let indefinido = undefined;
+//-------------------------------------------CLASE 2 - Nuevas funcionalidades de los lenguajes ECMAScritpt------------------------------------------------------
+// // ES7 ---------------------------------------------
+// const expNum = Math.pow(4, 3);
+// // console.log(expNum);
 
-// //tipos de datos de objetos -----------------
-// let arrayType = [1, 2, 3, 4, true, "coder", [1, 2, 3, 4], {}];
-// const fun1 = () => {};
-// class Clase {}
+// const expNumES7 = 4 ** 3;
+// // console.log(expNumES7);
 
-// console.log(Array.isArray(arrayType)); //-> para vericar si es un agreglo
+// const arrayNum = [1, 2, 3, 4, 7, 8, 9, 0];
+// // console.log(arrayNum.includes(5));
+// // console.log(arrayNum.includes(3));
 
-// //actividad en clase ----------------------
-// let nombre = "Juan";
-// let edad = 35;
-// let precio = 500;
-// let nombreSeries = ["GOT", "Friends"];
-// let nombrePeliculas = ["Pelicula1", "Pelicula2"];
+// // ES8 ---------------------------------------------
 
-// let usuario1 = {
+// const obj = {
 //   nombre: "Juan",
-//   edad: 35,
-//   precio: 500,
-//   nombreSeries: ["GOT", "Friends"],
-//   nombrePeliculas: ["Pelicula1", "Pelicula2"],
+//   apellido: "Herrera",
+//   edad: 30,
+//   esCasado: true,
 // };
-// console.log(usuario1);
-// console.log(usuario1.nombre); //-> propiedad particular
 
-// let usuarios = [
-//   {
-//     nombre: "Juan",
-//     edad: 35,
-//     precio: 500,
-//     nombreSeries: ["GOT", "Friends"],
-//     nombrePeliculas: ["Pelicula1", "Pelicula2"],
-//   },
-//   {
-//     nombre: "Carolina",
-//     edad: 38,
-//     precio: 1000,
-//     nombreSeries: ["Friends"],
-//     nombrePeliculas: ["Pelicula2", "Pelicula3"],
-//   },
-// ];
-// console.log(usuarios);
+// // Pasar de objetos a array para trabajarlos con sus varios metodos y volver a ser objetos
+// // console.log("entries", Object.entries(obj));
+// // console.log("values", Object.values(obj));
+// // console.log("keys", Object.keys(obj));
 
-// usuarios.forEach((usuario) => {
-//   usuario.edad++, usuario.nombreSeries.push("Peaky");
-// });
-// console.log(usuarios);
+// const objArray = Object.entries(obj); //-> creo el array a partir del objeto
 
-// // let o const ---------------------------------
+// const objArrayMod = objArray.map(([key, value]) => [
+//   key,
+//   `${value} modificado`,
+// ]);
+// // console.log(objArrayMod);
 
-// // Funciones -----------------------------------
+// const objMod = Object.fromEntries(objArrayMod); //-> de esta manera se vuelve a pasar de array a objeto
+// // console.log(objMod);
 
-// function sumar(n1, n2) {
-//   return n1 + n2; //->1° forma (con return lo podes utilizar siempre que la llames)
-//   // console.log(n1 + n2); //->2° forma (solo sirve para mostrar por consola)
-// }
-// console.log(sumar(5, 7)); //->1° forma
-// // sumar(5, 7); //->2° forma
+// // ES9 --------------------------------------------
+// const animales1 = ["perro", "gato", "pajaro", "raton"];
+// const animales2 = ["vaca", "toro", "caballo", "cerdo"];
 
-// const sumarFlecha = (n1, n2) => n1 + n2;
+// const animales = animales1.concat(animales2);
+// const animalesSpread = [...animales1, ...animales2]; //-> spread sirve para concatenar los elementos del array
+// // console.log(animales);
+// // console.log(animalesSpread);
 
-// // CLASES---------------------------------------
+// const obj1 = {
+//   nombre: "Lautaro",
+//   apellido: "Perez,",
+// };
 
-// // const producto1 = {
-// //   nombre: "Iphone",
-// //   precio: 200,
-// //   stock: 50,
-// // };
+// const obj2 = {
+//   edad: 45,
+//   esCasado: true,
+// };
 
-// // const producto2 = {
-// //   nombre: "Ipad",
-// //   precio: 200,
-// //   stock: 20,
-// // };
+// const objUsuario = { ...obj1, ...obj2 };
 
-// // const producto3 = {
-// //   nombre: "Computador",
-// //   precio: 1200,
-// //   stock: 45,
-// // }; //-> para evitar hacer producto x producto se pueden realizar clases
+// const objUsuarioCopia = { ...objUsuario, curso: "BackEnd" }; //-> se utiliza spread para guardar en memoria copia de datos en otra lugar y agregar nuevos datos
+// objUsuarioCopia.nombre = "Roger";
+// // console.log(objUsuario);
+// // console.log(objUsuarioCopia);
 
-// class Producto {
-//   constructor(nombre, precio, stock) {
-//     this.nombre = nombre;
-//     this.precio = precio;
-//     this.stock = stock;
-//   }
+// const functionUno = (param1, param2, ...otrosParams) => {
+//   // console.log(param1);
+//   // console.log(param2);
+//   // console.log(otrosParams);
+// };
 
-//   //cuando se crea una funcion dentro de una clase se llama metodo:
-//   devolverNombre() {
-//     return this.nombre;
-//   }
-// }
+// functionUno(1, 2, 3, 4, 5, 6, 7, 8, 9, 0); //-> rest operator para unir datos
 
-// const producto1 = new Producto("Iphone", 500, 50);
-// const producto2 = new Producto("Ipad", 200, 20);
-// const producto3 = new Producto("Computador", 1200, 45);
+// const { nombre, apellido, ...otraInfo } = objUsuarioCopia;
+// // console.log(otraInfo);
 
-// // console.log(producto1, producto2, producto3);
-// // console.log(producto1.devolverNombre());
-// // console.log(producto2.devolverNombre());
+// // ES10 ---------------------------------------------------
+
+// const saludo = "       hola a todos como estas?";
+// // console.log(saludo);
+// // console.log(saludo.trim()); //-> remueve espacios innecesarios
+
+// const array = [1, 2, 3, 4, [5, 6, 7, 8], [9, 0, 1, 2, [3, 4, 5, 6, 7]]];
+// // console.log(array.flat()); //-> para aplanar un array que contiene mas array internamente
+// // console.log(array.flat(2)); // -> niveles de los que se quiere llegar del array
+// // console.log(array.flat(Infinity));
+
+// // ES11 ---------------
+
+// //-> ?? nulish
+
+// const numero = 0;
+// console.log(numero || 10); //-> sirve para discriminar variables nulas mas excrictamente // null - undefined - 0 - " " - NaN
+// console.log(numero ?? 10); //-> sirve para discriminar menos variables nulas // null - undefined
+
+// //variables privadas que se utilizan en clases solo para uso interno: #

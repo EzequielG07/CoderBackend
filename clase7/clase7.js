@@ -1,3 +1,3 @@
-//-------------------------------------------CLASE 7 - Servidores web ------------------------------------------------------
+//-------------------------------------------CLASE 7 - Express avanzado ------------------------------------------------------
 
-//clase con ejemplos creando servidores con http y con express
+//se realizo una app de ejemplo con express

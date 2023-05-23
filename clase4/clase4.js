@@ -1,128 +1,141 @@
-//-------------------------------------------CLASE 4 - Programación sincrónica y asincrónica-----------------------------------------------------
-function saludar() {
-  return "Buenos dias";
-}
+//-------------------------------------------CLASE 5 - Manejo de archivos en JavaScript------------------------------------------------------
 
-const segundaFunOneline = (a) => a;
-const segundaFun = (a, b) => {
-  return a + b;
-};
+//* setTimeOut y setIntervals----------------------------------------------
 
-function terceraFun(a) {
-  return function () {};
-}
+// console.log("Primer log");
 
-segundaFun(5, 4); // 10 seg
-saludar(); // 0 seg
-terceraFun(5); // 5 seg
-// necesita el resultado de segundaFun()
+// setTimeout(() => {
+//   console.log("Set time out");
+// }, 4000);
 
-// la mayoria de metodos de array solicitan un callback----------------
-const array = ["perro", "gato", "raton", "loro"];
-array.forEach((animal) => `${animal} modificado`);
-// array.filter();
+// console.log("Ultimo log");
 
-function callbackFun(param) {
-  return `el usuario escribio: ${param}`;
-}
+// setInterval(() => {
+//   console.log("Set Interval");
+// }, 2000);
 
-function funDos(p1, callback) {
-  const respuesta = callback(p1);
-  return respuesta;
-}
+//* FILE SYSTEM ----------------------------------------------------------
 
-// console.log(funDos("Buenas noches", callbackFun));
+const fs = require("fs");
 
-//*Calback anidados ---------------------------------------------------
+//* SINCRONOS----------------------------------------------------
 
-const usuarios = [];
-const familiares = [];
+//* escribir archivos----------------------------------------------
 
-function agregarFamiliar(usuarioId, infoFamiliar) {
-  usuarios.findById(usuarioId, function (error, usuario) {
-    if (error) {
-      return error;
-    } else {
-      familiares.findAllByLastName(
-        usuario.lastname,
-        function (error, familiares) {
-          if (error) {
-            return error;
-          } else {
-            if (familiares.includes(infoFamiliar)) {
-              return "Este familiar existe";
-            } else {
-              familiares.createOne(infoFamiliar, function (error) {
-                if (error) {
-                  return error;
-                } else {
-                  return "Familiar creado con exito";
-                }
-              });
-            }
-          }
-        }
-      );
-    }
+fs.writeFileSync("archivo.txt", "primera linea"); //?---> crea un archivo y su contenido y si encuentra, sobreescribe contenido
+// fs.appendFileSync("archivo.txt", "segunda linea"); //!---> no lo vamos a utilizar en el curso pero en esta caso no sobreescribe
+
+//* leer un archivo------------------------------------------------
+const infoArchivo = fs.readFileSync("archivo.txt", "utf-8");
+console.log(infoArchivo);
+
+//* eliminar un archivo--------------------------------------------
+fs.unlinkSync("archivo.txt");
+
+//* existe un archivo----------------------------------------------
+console.log(fs.existsSync("archivo.txt")); //?---> este metodo es unicamente sincrono
+
+//* ASINCRONOS-----------------------------------------------------------
+
+//? ---> en este caso el callback en vez de 2 parametros solo necesita el de error (sin necesidad del parametro si se resuelve):
+//* escribir archivos----------------------------------------------
+fs.writeFile("archivo2.txt", "primera linea asincrona", (error) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Archivo creado con exito");
+  }
+});
+
+//* leer un archivo------------------------------------------------
+fs.readFile("archivo2.txt", "utf-8", (error, info) => {
+  if (error) {
+    console.log("prueba error:", error);
+  } else {
+    console.log(info);
+  }
+});
+
+//* eliminar un archivo--------------------------------------------
+fs.unlink("archivo2.txt", (error) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Archivo eliminado correctamente");
+  }
+});
+
+//* PROMESAS------------------------------------------------------
+
+//* escribir archivos----------------------------------------------
+fs.promises
+  .writeFile("archivoPromesas.txt", "Primer linea Promesas")
+  .then(() => {
+    console.log("Archivo creado con exito");
+  })
+  .catch((error) => {
+    console.log(error);
   });
-} //! No se recomienda hoy en dia hacer call anidados porque generan callbackshell se utilizan de a uno
 
-//* PROMISES (las promesas son un objeto)-------------------------------------------------------
-
-//* CREAR FUNCION PROMESA-----------------------------------------------------------------------
-
-function promesaFun(a, b) {
-  //lo sgte es un callbalck que espera dps parametros
-  return new Promise((resolve, reject) => {
-    if (a === 0 || b === 0) {
-      reject("Promise rechazada");
-    } else {
-      resolve(a + b);
-    }
+//* leer un archivo------------------------------------------------
+fs.promises
+  .readFile("archivoPromesas.txt", "utf-8")
+  .then((info) => {
+    console.log(info);
+  })
+  .catch((error) => {
+    console.log("Prueba error", error);
   });
-}
-// console.log(promesaFun(0, 5)); //rejected
-// console.log(promesaFun(2, 5)); //resolved
 
-//* .then . catch-------------------------------------------------------------------------------
-
-promesaFun(5, 7) //-> probar con 0 para ver el error
-  .then((resultado) => console.log(resultado))
+//* eliminar un archivo--------------------------------------------
+fs.promises
+  .unlink("archivoPromesas.txt")
+  .then(() => console.log("Archivo promesa borrado con exito")) //se pueda hacer sin llave si es una linea
   .catch((error) => console.log(error));
 
-function agregarFamiliar(usuarioId, infoFamiliar) {
-  usuarios
-    .findById(usuarioId)
-    .then((usuario) => {
-      return familiares.findAllByLastName(usuario.lastname);
-    })
-    .then((familiares) => {
-      if (familiares.includes(infoFamiliar)) {
-        return "Este familiar ya existe";
-      } else {
-        return familiares.createOne(infoFamiliar);
-      }
-    })
-    .then(() => {
-      return "Familiar creado con exito";
-    })
-    .catch((error) => {
-      return error;
-    });
-} // se maneja el error una sola vez
+//* EJEMPLO: crear y leer un archivo .JSON--------------------------------------------
 
-//* async / await (LO QUE SE UTILIZA HOY EN DIA Y LO QUE SE VERA EN EL CURSO)-------------------------------------------------------------------------------
+const productos = [
+  {
+    nombre: "iPhone",
+    precio: 500,
+    stock: 40,
+  },
+  {
+    nombre: "iPad",
+    precio: 200,
+    stock: 20,
+  },
+  {
+    nombre: "TV",
+    precio: 800,
+    stock: 10,
+  },
+  {
+    nombre: "Computadora",
+    precio: 1200,
+    stock: 40,
+  },
+];
 
-async function agregarFamiliar(usuarioId, infoFamiliar) {
-  try {
-    const usuario = await usuarios.findById(usuarioId);
-    const familiares = await familiares.findAllByLastName(usuario.lastname);
-    if (familiares.includes(infoFamiliar)) {
-      return "Este familiar ya existe";
-    }
-    await familiares.createOne(infoFamiliar);
-    return "Familiar creado con exito";
-  } catch (error) {
-    return error;
-  }
-}
+//?---> JSON.stringify() -> pasa de objeto a texto plano Json
+//?---> JSON.parse() -> pasa de texto plano Json a objeto
+
+fs.promises
+  .writeFile("archivoPromesas.json", JSON.stringify(productos))
+  .then(() => {
+    console.log("Productos guardados con exito");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+fs.promises
+  .readFile("archivoPromesas.json", "utf-8")
+  .then((info) => {
+    console.log(info);
+    console.log(JSON.parse(info));
+  })
+  .catch((error) => {
+    console.log("Prueba error", error);
+  });

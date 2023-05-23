@@ -1,94 +1,128 @@
-//-------------------------------------------CLASE 3 - Nuevas funcionalidades de los lenguajes ECMAScritpt------------------------------------------------------
-// // ES7 ---------------------------------------------
-// const expNum = Math.pow(4, 3);
-// // console.log(expNum);
+//-------------------------------------------CLASE 3 - Programación sincrónica y asincrónica-----------------------------------------------------
+function saludar() {
+  return 'Buenos dias';
+}
 
-// const expNumES7 = 4 ** 3;
-// // console.log(expNumES7);
+const segundaFunOneline = (a) => a;
+const segundaFun = (a, b) => {
+  return a + b;
+};
 
-// const arrayNum = [1, 2, 3, 4, 7, 8, 9, 0];
-// // console.log(arrayNum.includes(5));
-// // console.log(arrayNum.includes(3));
+function terceraFun(a) {
+  return function () {};
+}
 
-// // ES8 ---------------------------------------------
+segundaFun(5, 4); // 10 seg
+saludar(); // 0 seg
+terceraFun(5); // 5 seg
+// necesita el resultado de segundaFun()
 
-// const obj = {
-//   nombre: "Juan",
-//   apellido: "Herrera",
-//   edad: 30,
-//   esCasado: true,
-// };
+// la mayoria de metodos de array solicitan un callback----------------
+const array = ['perro', 'gato', 'raton', 'loro'];
+array.forEach((animal) => `${animal} modificado`);
+// array.filter();
 
-// // Pasar de objetos a array para trabajarlos con sus varios metodos y volver a ser objetos
-// // console.log("entries", Object.entries(obj));
-// // console.log("values", Object.values(obj));
-// // console.log("keys", Object.keys(obj));
+function callbackFun(param) {
+  return `el usuario escribio: ${param}`;
+}
 
-// const objArray = Object.entries(obj); //-> creo el array a partir del objeto
+function funDos(p1, callback) {
+  const respuesta = callback(p1);
+  return respuesta;
+}
 
-// const objArrayMod = objArray.map(([key, value]) => [
-//   key,
-//   `${value} modificado`,
-// ]);
-// // console.log(objArrayMod);
+// console.log(funDos("Buenas noches", callbackFun));
 
-// const objMod = Object.fromEntries(objArrayMod); //-> de esta manera se vuelve a pasar de array a objeto
-// // console.log(objMod);
+//*Calback anidados ---------------------------------------------------
 
-// // ES9 --------------------------------------------
-// const animales1 = ["perro", "gato", "pajaro", "raton"];
-// const animales2 = ["vaca", "toro", "caballo", "cerdo"];
+const usuarios = [];
+const familiares = [];
 
-// const animales = animales1.concat(animales2);
-// const animalesSpread = [...animales1, ...animales2]; //-> spread sirve para concatenar los elementos del array
-// // console.log(animales);
-// // console.log(animalesSpread);
+function agregarFamiliar(usuarioId, infoFamiliar) {
+  usuarios.findById(usuarioId, function (error, usuario) {
+    if (error) {
+      return error;
+    } else {
+      familiares.findAllByLastName(
+        usuario.lastname,
+        function (error, familiares) {
+          if (error) {
+            return error;
+          } else {
+            if (familiares.includes(infoFamiliar)) {
+              return 'Este familiar existe';
+            } else {
+              familiares.createOne(infoFamiliar, function (error) {
+                if (error) {
+                  return error;
+                } else {
+                  return 'Familiar creado con exito';
+                }
+              });
+            }
+          }
+        }
+      );
+    }
+  });
+} //! No se recomienda hoy en dia hacer call anidados porque generan callbackshell se utilizan de a uno
 
-// const obj1 = {
-//   nombre: "Lautaro",
-//   apellido: "Perez,",
-// };
+//* PROMISES (las promesas son un objeto)-------------------------------------------------------
 
-// const obj2 = {
-//   edad: 45,
-//   esCasado: true,
-// };
+//* CREAR FUNCION PROMESA-----------------------------------------------------------------------
 
-// const objUsuario = { ...obj1, ...obj2 };
+function promesaFun(a, b) {
+  //lo sgte es un callbalck que espera dps parametros
+  return new Promise((resolve, reject) => {
+    if (a === 0 || b === 0) {
+      reject('Promise rechazada');
+    } else {
+      resolve(a + b);
+    }
+  });
+}
+// console.log(promesaFun(0, 5)); //rejected
+// console.log(promesaFun(2, 5)); //resolved
 
-// const objUsuarioCopia = { ...objUsuario, curso: "BackEnd" }; //-> se utiliza spread para guardar en memoria copia de datos en otra lugar y agregar nuevos datos
-// objUsuarioCopia.nombre = "Roger";
-// // console.log(objUsuario);
-// // console.log(objUsuarioCopia);
+//* .then . catch-------------------------------------------------------------------------------
 
-// const functionUno = (param1, param2, ...otrosParams) => {
-//   // console.log(param1);
-//   // console.log(param2);
-//   // console.log(otrosParams);
-// };
+promesaFun(5, 7) //-> probar con 0 para ver el error
+  .then((resultado) => console.log(resultado))
+  .catch((error) => console.log(error));
 
-// functionUno(1, 2, 3, 4, 5, 6, 7, 8, 9, 0); //-> rest operator para unir datos
+function agregarFamiliar(usuarioId, infoFamiliar) {
+  usuarios
+    .findById(usuarioId)
+    .then((usuario) => {
+      return familiares.findAllByLastName(usuario.lastname);
+    })
+    .then((familiares) => {
+      if (familiares.includes(infoFamiliar)) {
+        return 'Este familiar ya existe';
+      } else {
+        return familiares.createOne(infoFamiliar);
+      }
+    })
+    .then(() => {
+      return 'Familiar creado con exito';
+    })
+    .catch((error) => {
+      return error;
+    });
+} // se maneja el error una sola vez
 
-// const { nombre, apellido, ...otraInfo } = objUsuarioCopia;
-// // console.log(otraInfo);
+//* async / await (LO QUE SE UTILIZA HOY EN DIA Y LO QUE SE VERA EN EL CURSO)-------------------------------------------------------------------------------
 
-// // ES10 ---------------------------------------------------
-
-// const saludo = "       hola a todos como estas?";
-// // console.log(saludo);
-// // console.log(saludo.trim()); //-> remueve espacios innecesarios
-
-// const array = [1, 2, 3, 4, [5, 6, 7, 8], [9, 0, 1, 2, [3, 4, 5, 6, 7]]];
-// // console.log(array.flat()); //-> para aplanar un array que contiene mas array internamente
-// // console.log(array.flat(2)); // -> niveles de los que se quiere llegar del array
-// // console.log(array.flat(Infinity));
-
-// // ES11 ---------------
-
-// //-> ?? nulish
-
-// const numero = 0;
-// console.log(numero || 10); //-> sirve para discriminar variables nulas mas excrictamente // null - undefined - 0 - " " - NaN
-// console.log(numero ?? 10); //-> sirve para discriminar menos variables nulas // null - undefined
-
-// //variables privadas que se utilizan en clases solo para uso interno: #
+async function agregarFamiliar(usuarioId, infoFamiliar) {
+  try {
+    const usuario = await usuarios.findById(usuarioId);
+    const familiares = await familiares.findAllByLastName(usuario.lastname);
+    if (familiares.includes(infoFamiliar)) {
+      return 'Este familiar ya existe';
+    }
+    await familiares.createOne(infoFamiliar);
+    return 'Familiar creado con exito';
+  } catch (error) {
+    return error;
+  }
+}

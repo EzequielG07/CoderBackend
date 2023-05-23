@@ -1,11 +1,4 @@
-//-------------------------------------------CLASE 12 - Aplicación chat con Websockets------------------------------------------------------
-//para desplegarlo en Glitch para pruebas antes hay que hacer lo siguiente en el package.json
-// cambiar en el package.json el siguiente script
-// "scripts": {
-//   "start":"node src/app.js"
-// },
-// agregar tambien:
-// "engines":{
-//   "node":"16.x"
-// }
-//cambiar la ruta de views a /
+//-------------------------------------------CLASE 12 - MongoDB------------------------------------------------------
+//En este curso vemos base de datos de tipo NoSql
+// el profe recomienda ver base de datos SQL
+// a partir de la hora 1:00:00 empieza la instalacion del Mongodb

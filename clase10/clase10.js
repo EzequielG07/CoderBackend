@@ -1,5 +1,2 @@
-//-------------------------------------------CLASE 10 - Motores de plantillas ------------------------------------------------------
-// cambiar en el package.json el siguiente script
-// "scripts": {
-//   "start":"nodemon src/app.js"
-// },
+//-------------------------------------------CLASE 10 - Websockets------------------------------------------------------
+// primeros pason con websockets util para desafio en diapositiva
