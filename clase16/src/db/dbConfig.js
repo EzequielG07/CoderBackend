@@ -1,8 +1,10 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const URI = 'mongodb+srv://coderhouse:coderhouse@cluster0.sugvijj.mongodb.net/mongoose1DB?retryWrites=true&w=majority'
+const URI =
+  'mongodb+srv://dbEze:1553314398@cluster0.qbr9pr4.mongodb.net/mongoose1DB?retryWrites=true&w=majority';
+// 'mongodb+srv://coderhouse:coderhouse@cluster0.sugvijj.mongodb.net/mongoose1DB?retryWrites=true&w=majority'
 
 mongoose
   .connect(URI)
   .then(() => console.log('Conectado a la base de datos'))
-  .catch((error) => console.log(error))
+  .catch((error) => console.log(error));

@@ -1,23 +1,23 @@
-import { coursesModel } from '../db/models/courses.model.js'
+import { coursesModel } from '../db/models/courses.model.js';
 
 export default class CoursesManager {
   async findCourse(id) {
     try {
-      const course = await coursesModel.find({ _id: id })
-      .populate(['teacher','students'])
-      return course
+      const course = await coursesModel
+        .find({ _id: id })
+        .populate(['teacher', 'students']);
+      return course;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  async createCourse(objCourse){
+  async createCourse(objCourse) {
     try {
-        const course = await coursesModel.create(objCourse)
-        return course
+      const course = await coursesModel.create(objCourse);
+      return course;
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
-
 }
