@@ -1,9 +1,9 @@
-import { Router } from 'express'
-import { usersModel } from '../db/models/users.model.js'
-import { hashData, compareData } from '../utils.js'
-import passport from 'passport'
+import { Router } from 'express';
+import { usersModel } from '../db/models/users.model.js';
+import { hashData, compareData } from '../utils.js';
+import passport from 'passport';
 
-const router = Router()
+const router = Router();
 
 const users = [
   {
@@ -11,7 +11,7 @@ const users = [
     password: '12345',
   },
   { username: 'carla1', password: 'abcde' },
-]
+];
 
 //FILESTORE
 // router.post('/', (req, res) => {
@@ -43,15 +43,16 @@ const users = [
 //   }
 //   req.session['email'] = email
 //   req.session['password'] = password
-//   if (email === 'admin@coder' && password === 'admin12345') {
-//     req.session['isAdmin'] = true
-//   } else {
-//     req.session['isAdmin'] = false
-//   }
+// //   if (email === 'admin@coder' && password === 'admin12345') {
+// //     req.session['isAdmin'] = true
+// //   } else {
+// //     req.session['isAdmin'] = false
+// //   }
 
 //   res.json({ meesage: 'User found' })
 // })
 
+//? clase 20 - hashear con bcrypt
 // router.post('/signup', async (req, res) => {
 //   const user = req.body
 //   const hashPassword = await hashData(user.password)
@@ -61,19 +62,19 @@ const users = [
 // })
 
 router.get('/prueba', (req, res) => {
-  console.log('session', req.session)
+  console.log('session', req.session);
   if (req.session?.email) {
-    res.send(`Bienvenido ${req.session.email}`)
-    return
+    res.send(`Bienvenido ${req.session.email}`);
+    return;
   }
-  res.redirect('/views')
-})
+  res.redirect('/views');
+});
 
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/views')
-  })
-})
+    res.redirect('/views');
+  });
+});
 
 // PASSPORT
 
@@ -87,7 +88,7 @@ router.post(
   //   console.log(req);
   //   res.send(`User found with email ${req.user.email}`)
   // }
-)
+);
 
 router.post(
   '/signup',
@@ -97,11 +98,14 @@ router.post(
   //   console.log(req.user);
   //   res.send('User created')
   // }
-)
+);
 
-router.get('/signUpGithub', passport.authenticate('github', { scope: [ 'user:email' ] }))
-router.get('/github', passport.authenticate('github'),(req,res)=>{
-  res.send('User by github')
-})
+router.get(
+  '/signUpGithub',
+  passport.authenticate('github', { scope: ['user:email'] })
+);
+router.get('/github', passport.authenticate('github'), (req, res) => {
+  res.send('User by github');
+});
 
-export default router
+export default router;
