@@ -76,8 +76,8 @@ router.get('/logout', (req, res) => {
   });
 });
 
+//?clase 21
 // PASSPORT
-
 router.post(
   '/',
   passport.authenticate('login', {

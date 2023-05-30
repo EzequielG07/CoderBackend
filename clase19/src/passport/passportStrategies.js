@@ -1,11 +1,11 @@
-import passport from 'passport'
-import { Strategy as LocalStrategy } from 'passport-local'
-import { Strategy as GithubStrategy } from 'passport-github2'
-import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt'
-import { usersModel } from '../db/models/users.model.js'
-import { compareData, hashData } from '../utils.js'
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as GithubStrategy } from 'passport-github2';
+import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt';
+import { usersModel } from '../db/models/users.model.js';
+import { compareData, hashData } from '../utils.js';
 
-const secretKeyJWT = 'secretJWT'
+const secretKeyJWT = 'secretJWT';
 // LOCAL
 passport.use(
   'login',
@@ -14,20 +14,20 @@ passport.use(
       usernameField: 'email',
     },
     async (email, password, done) => {
-      const user = await usersModel.findOne({ email })
+      const user = await usersModel.findOne({ email });
       if (!user) {
-        return done(null, false)
+        return done(null, false);
       }
-      const isPassword = await compareData(password, user.password)
+      const isPassword = await compareData(password, user.password);
       //console.log('password',isPassword);
       if (!isPassword) {
-        return done(null, false)
+        return done(null, false);
       }
 
-      done(null, user)
+      done(null, user);
     }
   )
-)
+);
 
 passport.use(
   'signup',
@@ -37,18 +37,19 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, email, password, done) => {
-      const userDB = await usersModel.findOne({ email })
+      const userDB = await usersModel.findOne({ email });
       if (userDB) {
-        return done(null, false)
+        return done(null, false);
       }
-      const hashPassword = await hashData(password)
-      const newUser = { ...req.body, password: hashPassword }
-      const newUserDB = await usersModel.create(newUser)
-      done(null, newUserDB)
+      const hashPassword = await hashData(password);
+      const newUser = { ...req.body, password: hashPassword };
+      const newUserDB = await usersModel.create(newUser);
+      done(null, newUserDB);
     }
   )
-)
+);
 
+//?clase21
 // GITHUB
 passport.use(
   'github',
@@ -59,22 +60,23 @@ passport.use(
       callbackURL: 'http://localhost:8080/users/github',
     },
     async (accessToken, refreshToken, profile, done) => {
-      const email = profile._json.email
-      const userDB = await usersModel.findOne({ email })
+      // console.log(profile);
+      const email = profile._json.email;
+      const userDB = await usersModel.findOne({ email });
       if (userDB) {
-        done(null, false)
+        done(null, false);
       }
       const newUser = {
         first_name: profile._json.name.split(' ')[0],
         last_name: profile._json.name.split(' ')[1] || '',
         email,
         password: '',
-      }
-      const newUserDB = await usersModel.create(newUser)
-      done(null, newUserDB)
+      };
+      const newUserDB = await usersModel.create(newUser);
+      done(null, newUserDB);
     }
   )
-)
+);
 
 // JWT
 
@@ -86,23 +88,23 @@ passport.use(
       secretOrKey: secretKeyJWT,
     },
     async (jwt_payload, done) => {
-      done(null, jwt_payload)
+      done(null, jwt_payload);
     }
   )
-)
+);
 passport.serializeUser((user, done) => {
   try {
-    done(null, user.id)
+    done(null, user.id);
   } catch (error) {
-    done(error)
+    done(error);
   }
-})
+});
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await usersModel.findById(id)
-    done(null, user)
+    const user = await usersModel.findById(id);
+    done(null, user);
   } catch (error) {
-    done(error)
+    done(error);
   }
-})
+});
