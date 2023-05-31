@@ -1,15 +1,16 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
-const secretKeyJWT = 'secretJWT'
+//? clase22
+const secretKeyJWT = 'secretJWT';
 export const jwtValidation = (req, res, next) => {
-const authHeader = req.get('Authorization')
-const token = authHeader.split(' ')[1]
-const verifiedUser = jwt.verify(token,secretKeyJWT)
-if(verifiedUser){
-    req.user = verifiedUser
-    next()
-}
-}
+  const authHeader = req.get('Authorization');
+  const token = authHeader.split(' ')[1];
+  const verifiedUser = jwt.verify(token, secretKeyJWT);
+  if (verifiedUser) {
+    req.user = verifiedUser;
+    next();
+  }
+};
 
 //COOKIE
 // export const jwtValidation = (req, res, next) => {
